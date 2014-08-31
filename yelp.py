@@ -1,5 +1,5 @@
 from requests_oauthlib import OAuth1Session
-import json 
+import json
 
 with open('creds.log', 'r') as creds:
     consumer_key = creds.readline().strip()
@@ -14,7 +14,8 @@ response = yelp.get(url)
 response = response.json()
 
 with open('dump.txt', 'w') as file:
-    json.dump(response, file, sort_keys = True, indent = 4)
+    json.dump(response, file, sort_keys=True, indent=4)
+
 
 class Business:
     def __init__(self):
@@ -40,20 +41,24 @@ class Business:
 results = []
 
 for x in range(0, 40):
-	business = Business()
-	try:
-                business.name = response['businesses'][x]['name']
-                if len(response['businesses'][x]['location']['display_address']) > 1:
-                    #handles addresses with things like unit or suite numbers
-                business.address = response['businesses'][x]['location']['display_address'][0]
-                business.city = response['businesses'][x]['location']['city']
-                business.state = response['businesses'][x]['location']['state_code']
-                business.zip = response['businesses'][x]['location']['postal_code']
-                business.rating = str(response['businesses'][x]['rating'])
-                business.review_count = str(response['businesses'][x]['review_count'])
-                business.category = response['businesses'][x]['categories'][0][0]
-                results.append(business)
-	except IndexError:
-		break
+    business = Business()
+    try:
+        source = response['businesses'][x]
+        business.name = source['name']
+        if len(source['location']['display_address']) > 1:
+            # handles addresses with things like unit or suite numbers
+            business.address = source['location']['display_address'][0]
+            business.address += "\n" + source['location']['display_address'][1]
+        else:
+            business.address = source['location']['display_address'][0]
+        business.city = source['location']['city']
+        business.state = source['location']['state_code']
+        business.zip = source['location']['postal_code']
+        business.rating = str(source['rating'])
+        business.review_count = str(source['review_count'])
+        business.category = source['categories'][0][0]
+        results.append(business)
+    except IndexError:
+        break
 
 print(results)
