@@ -1,5 +1,6 @@
 from requests_oauthlib import OAuth1Session
 import json
+import csv
 
 with open('creds.log', 'r') as creds:
     consumer_key = creds.readline().strip()
@@ -29,14 +30,7 @@ class Business:
         self.category = None
 
     def __repr__(self):
-        return ("\nName: " + self.name + "\n" +
-                "Address: " + self.address + "\n" +
-                "City: " + self.city + "\n" +
-                "State: " + self.state + "\n" +
-                "Zip Code: " + self.zip + "\n" +
-                "Rating: " + self.rating + "\n" +
-                "Number of reviews = " + self.review_count + "\n"
-                "Category: " + self.category + "\n")
+        return (self.name, self.address, self.city,  self.state, self.zip, self.rating, self.review_count, self.category)
 
 results = []
 
@@ -45,8 +39,7 @@ for x in range(0, 40):
     try:
         source = response['businesses'][x]
         business.name = source['name']
-        if len(source['location']['display_address']) > 1:
-            # handles addresses with things like unit or suite numbers
+        if len(source['location']['display_address']) > 1:     
             business.address = source['location']['display_address'][0]
             business.address += "\n" + source['location']['display_address'][1]
         else:
@@ -60,5 +53,10 @@ for x in range(0, 40):
         results.append(business)
     except IndexError:
         break
+
+with open('results.csv', newline='') as csvout:
+    writer = csv.writer(csvout, delimiter=' ', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    for row in results:
+        writer.writerow(row)
 
 print(results)
