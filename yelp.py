@@ -20,8 +20,9 @@ with open('dump.txt', 'w') as file:
 
 class Business:
     def __init__(self):
+        self.id = None
         self.name = None
-        self.street = None
+        self.address = None
         self.city = None
         self.state = None
         self.zip = 00000
@@ -30,37 +31,45 @@ class Business:
         self.category = None
 
     def __repr__(self):
-        return [self.name, self.address, self.city, self.state, self.zip, self.rating, self.review_count, self.category]
+        return ("\nID: " + self.id + "\n" +
+                "Name: " + self.name + "\n" +
+                "Address: " + self.address + "\n" +
+                "City: " + self.city + "\n" +
+                "State: " + self.state + "\n" +
+                "Zip Code: " + self.zip + "\n" +
+                "Rating: " + self.rating + "\n" +
+                "Category: " + self.category + "\n")
 
 results = []
 items = []
 
 for x in range(0, 40):
-    business = Business()
+    biz = Business()
     try:
         source = response['businesses'][x]
-        business.name = source['name']
-        if len(source['location']['address']) > 1:     
-            business.address = source['location']['address'][0]
-            business.address += "\n" + source['location']['address'][1]
+        biz.id = source['id']
+        biz.name = source['name']
+        if len(source['location']['address']) > 1:
+            biz.address = source['location']['address'][0]
+            biz.address += "\n" + source['location']['address'][1]
         else:
-            business.address = source['location']['display_address'][0]
-        business.city = source['location']['city']
-        business.state = source['location']['state_code']
-        business.zip = source['location']['postal_code']
-        business.rating = str(source['rating'])
-        business.review_count = str(source['review_count'])
-        business.category = source['categories'][0][0]
-        results.append(business)
-        item = [business.name, business.address, business.city, business.state, business.zip, business.rating, business.review_count, business.category]
+            biz.address = source['location']['display_address'][0]
+        biz.city = source['location']['city']
+        biz.state = source['location']['state_code']
+        biz.zip = source['location']['postal_code']
+        biz.rating = str(source['rating'])
+        biz.review_count = str(source['review_count'])
+        biz.category = source['categories'][0][0]
+        results.append(biz)
+        item = [biz.id, biz.name, biz.address, biz.city, biz.state,
+                biz.zip, biz.rating, biz.review_count, biz.category]
         items.append(item)
     except IndexError:
         break
 
 with open('results.csv', 'w') as csvout:
     output = csv.writer(csvout)
-    output.writerow(['Name','Address','City','State','Zip','Rating','Review Count','Category'])
+    output.writerow(['ID', 'Name', 'Address', 'City', 'State',
+                     'Zip', 'Rating', 'Review Count', 'Category'])
     for item in items:
         output.writerow(item)
-
-#print(results)
