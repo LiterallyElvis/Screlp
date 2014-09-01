@@ -30,18 +30,19 @@ class Business:
         self.category = None
 
     def __repr__(self):
-        return (self.name, self.address, self.city,  self.state, self.zip, self.rating, self.review_count, self.category)
+        return [self.name, self.address, self.city, self.state, self.zip, self.rating, self.review_count, self.category]
 
 results = []
+items = []
 
 for x in range(0, 40):
     business = Business()
     try:
         source = response['businesses'][x]
         business.name = source['name']
-        if len(source['location']['display_address']) > 1:     
-            business.address = source['location']['display_address'][0]
-            business.address += "\n" + source['location']['display_address'][1]
+        if len(source['location']['address']) > 1:     
+            business.address = source['location']['address'][0]
+            business.address += "\n" + source['location']['address'][1]
         else:
             business.address = source['location']['display_address'][0]
         business.city = source['location']['city']
@@ -51,12 +52,15 @@ for x in range(0, 40):
         business.review_count = str(source['review_count'])
         business.category = source['categories'][0][0]
         results.append(business)
+        item = [business.name, business.address, business.city, business.state, business.zip, business.rating, business.review_count, business.category]
+        items.append(item)
     except IndexError:
         break
 
-with open('results.csv', newline='') as csvout:
-    writer = csv.writer(csvout, delimiter=' ', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-    for row in results:
-        writer.writerow(row)
+with open('results.csv', 'w') as csvout:
+    output = csv.writer(csvout)
+    output.writerow(['Name','Address','City','State','Zip','Rating','Review Count','Category'])
+    for item in items:
+        output.writerow(item)
 
-print(results)
+#print(results)
