@@ -1,5 +1,0 @@
-MILE_IN_COORDS = 0.0145
-KM_IN_COORDS = 0.009
-
-base = 30.272738, -97.741064
-radius = 3
