@@ -2,6 +2,7 @@ import math
 
 X_INCREMENT = .014474
 Y_INCREMENT = .016761
+
 # Author: Wayne Dyck
 def haversine(origin, destination):
     lat1, long1 = origin
@@ -20,10 +21,12 @@ def haversine(origin, destination):
 
 def generate_coords(origin, radius, density=1):
     coords = []
-    coords.append(origin)
     a, b = origin
-    xmin, ymax = ((a + (X_INCREMENT * radius)), ((b - (Y_INCREMENT * radius))))
-    xmax, ymin = ((a - (X_INCREMENT * radius)), ((b + (Y_INCREMENT * radius))))
+    xmax, ymin = ((a + (X_INCREMENT * radius)), ((b - (Y_INCREMENT * radius))))
+    xmin, ymax = ((a - (X_INCREMENT * radius)), ((b + (Y_INCREMENT * radius))))
+    x, y = xmin, ymax
 
+    while x <= xmax and y >= ymin:
+        x, y = x 
 
 generate_coords((30.274294, -97.740504), 2)
