@@ -21,18 +21,17 @@ def haversine(origin, destination):
 
 def generate_coords(origin, radius, density=1):
     coords = []
-    limit = int(1+((2**density)**2) / 2)
+    limit = int(1+((2**density)**2))# / 2)
     a, b = origin
-    print(origin)
     xmax, ymin = ((a + (X_INCREMENT * radius)), ((b - (Y_INCREMENT * radius))))
-    print(xmax, ymin)
     xmin, ymax = ((a - (X_INCREMENT * radius)), ((b + (Y_INCREMENT * radius))))
-    print(xmin, ymax)
     x, y = xmin, ymax
 
     for x in range(0, limit):
       for y in range(0, limit):
-          pass
+          new_coord = ((a + (x * X_INCREMENT)), (b - (y * Y_INCREMENT)))
+          coords.append(new_coord)
 
+    return coords
 
-generate_coords((30.274294, -97.740504), 2)
+print(generate_coords((30.274294, -97.740504), 2))
