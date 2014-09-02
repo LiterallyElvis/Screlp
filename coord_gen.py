@@ -3,8 +3,9 @@ import math
 X_INCREMENT = .014474
 Y_INCREMENT = .016761
 
-# Author: Wayne Dyck
+
 def haversine(origin, destination):
+    # Author: Wayne Dyck
     lat1, long1 = origin
     lat2, long2 = destination
     radius = 3959 # of earth, in miles
