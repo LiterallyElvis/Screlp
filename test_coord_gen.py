@@ -16,7 +16,7 @@ class SortTest(unittest.TestCase):
                          (30.259819, -97.740504), 
                          (30.274293, -97.757265)]
 
-        self.assertEqual(set(proper_coords) & set(coord_gen.generate_coords(origin, 1)))b
+        self.assertEqual(set(proper_coords) & set(coord_gen.generate_coords(origin, 1)))
         
 if __name__ == '__main__':
     unittest.main()
