@@ -10,13 +10,18 @@ class SortTest(unittest.TestCase):
 
     def test_coordinate_generation(self):
         origin = (30.274294, -97.740504)
-        proper_coords = [(30.274293, -97.740504), 
-                         (30.288769, -97.740504), 
-                         (30.274293, -97.723743), 
-                         (30.259819, -97.740504), 
+        proper_coords = [(30.274293, -97.740504),
+                         (30.288769, -97.740504),
+                         (30.274293, -97.723743),
+                         (30.259819, -97.740504),
                          (30.274293, -97.757265)]
+        print(proper_coords)
+        test_coords = coord_gen.generate_coords(origin, 1)
+        print(test_coords)
+        compare = set(set(proper_coords) & set(test_coords))
+        print(compare)
 
-        self.assertEqual(set(proper_coords) & set(coord_gen.generate_coords(origin, 1)))b
-        
+        self.assertTrue(false)
+
 if __name__ == '__main__':
     unittest.main()
