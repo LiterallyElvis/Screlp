@@ -23,7 +23,7 @@ def haversine(origin, destination):
 
 def generate_coords(origin, radius=1, density=0):
     coords = []
-    limit = int(1+((2**density)**2))
+    limit = int(1+((2**density)**2))  # y = (1 + 2^x)^2
     a, b = origin
     xmax, ymin = ((a + (X_INCREMENT * radius)), ((b - (Y_INCREMENT * radius))))
     xmin, ymax = ((a - (X_INCREMENT * radius)), ((b + (Y_INCREMENT * radius))))
@@ -47,5 +47,3 @@ def enforce_radius(coords, radius):
             coords.remove(pair)
 
     return coords
-
-print(generate_coords((30.267153, -97.7430608)))
