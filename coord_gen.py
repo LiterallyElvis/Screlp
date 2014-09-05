@@ -31,7 +31,9 @@ def generate_coords(origin, radius=1, density=0):
 
     for x in range(0, limit):
         for y in range(0, limit):
-            new_coord = ((a + (x * X_INCREMENT)), (b - (y * Y_INCREMENT)))
+            lat = float("%.6f" % (a + (x * X_INCREMENT)))
+            long = float("%.6f" % (b - (y * Y_INCREMENT)))
+            new_coord = (lat, long)
             if new_coord not in coords:
                 coords.append(new_coord)
 
@@ -46,3 +48,4 @@ def enforce_radius(coords, radius):
 
     return coords
 
+print(generate_coords((30.267153, -97.7430608)))
