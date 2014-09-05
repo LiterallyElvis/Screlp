@@ -21,7 +21,7 @@ def haversine(origin, destination):
     return distance
 
 
-def generate_coords(origin, radius, density=0):
+def generate_coords(origin, radius=1, density=0):
     coords = []
     limit = int(1+((2**density)**2))
     a, b = origin
@@ -34,5 +34,13 @@ def generate_coords(origin, radius, density=0):
             new_coord = ((a + (x * X_INCREMENT)), (b - (y * Y_INCREMENT)))
             if new_coord not in coords:
                 coords.append(new_coord)
+
+    return coords
+
+def enforce_radius(coords, radius):
+    for pair in coords:
+        lat, long = pair
+        if haversine(lat, long) > radius:
+            coords.remove(pair)
 
     return coords
