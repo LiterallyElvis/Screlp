@@ -1,7 +1,24 @@
 from requests_oauthlib import OAuth1Session
+from pygeocoder import Geocoder
 import json
 import csv
+import argparse
 
+url = 'http://api.yelp.com/v2/search?category_filter=icecream&location=Austin'
+
+parser = argparse.ArgumentParser(description="Fetches Yelp results.")
+#parser.add_argument("-c", "--coords", action="store", dest="coords",
+#                     help="Specific origin coordinate to base query on")
+parser.add_argument("-a", "--address", action="store", dest="address", 
+                     required=True, help="Address to base query upon")
+parser.add_argument("-r", "--radius", action="store", dest="radius", default=1, 
+                     help="Radius in miles from origin coordinate.")
+parser.add_argument("-d", "--density", action="store", dest="density", default=0, 
+                     help="Grid desnity")
+parser.add_argument("-file", action="store", dest="filename", default="results.csv",
+                     help="Filename to save csv as.")
+
+args = parser.parse_args()
 
 class Business:
     def __init__(self):
@@ -25,13 +42,16 @@ class Business:
                 "Rating: " + self.rating + "\n" +
                 "Category: " + self.category + "\n")
 
-url = 'http://api.yelp.com/v2/search?category_filter=icecream&location=Austin'
+
+def get_coords(args):
+    result = Geocoder.geocode(args.address)
+    return result[0].coordinates
 
 
-def make_api_call(api_creds="creds.config", url):
-    with open(filename, 'r') as creds:
+def make_api_call(url, api_creds="creds.config"):
+    with open(api_creds, 'r') as creds:
         consumer_key = creds.readline().strip()
-        consapi_resultumer_secret = creds.readline().strip()
+        consumer_secret = creds.readline().strip()
         token = creds.readline().strip()
         token_secret = creds.readline().strip()
 
@@ -48,8 +68,8 @@ def write_raw_result(api_result):
 
 
 def fetch_results(api_result):
+    items = []
     for x in range(0, 40):
-        items = []
         biz = Business()
         try:
             source = api_result['businesses'][x]
@@ -81,3 +101,5 @@ def write_csv_file(items):
                          'Zip', 'Rating', 'Review Count', 'Category'])
         for row in items:
             output.writerow(row)
+
+write_csv_file(fetch_results(make_api_call(url)))
