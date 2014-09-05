@@ -37,6 +37,7 @@ def generate_coords(origin, radius=1, density=0):
 
     return coords
 
+
 def enforce_radius(coords, radius):
     for pair in coords:
         lat, long = pair
@@ -44,3 +45,4 @@ def enforce_radius(coords, radius):
             coords.remove(pair)
 
     return coords
+
