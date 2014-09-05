@@ -6,8 +6,8 @@ import csv
 import argparse
 
 parser = argparse.ArgumentParser(description="Fetches Yelp results.")
-parser.add_argument("-c", "--category", action="store", dest="category_filter",
-                    help="Category on yelp to search for")
+parser.add_argument("-c", "--category", action="store", dest="category",
+                    help="Category filter to search for")
 parser.add_argument("-n", "--neighborhood", action="store",
                     dest="neighborhood", help="Category on yelp to search for")
 parser.add_argument("-t", "--term", action="store", dest="term",
@@ -48,12 +48,10 @@ def make_url(args, coords):
     """
     url = "http://api.yelp.com/v2/search?"
     lat, long = coords
-    if args.category_filter:
-        args.category_filter = args.category_filter.replace(" ", "+")
-        url += "&category_filter={0}".format(args.category_filter)
+    if args.category:
+        url += "&category_filter={0}".format(args.category).replace(" ", "+")
     if args.term:
-        args.term = args.term.replace(" ", "+")
-        url += "&term={0}".format(args.term)
+        url += "&term={0}".format(args.term).replace(" ", "+")
     if args.neighborhood:
         args.neighborhood = args.neighborhood .replace(" ", "+")
         url += "&location={0}".format(args.neighborhood)
@@ -69,9 +67,9 @@ def get_coords(args):
     return result[0].coordinates
 
 
-def make_api_call(url, api_creds="creds.config"):
+def make_api_call(url, api_creds="yelp.creds"):
     """
-    Imports Yelp API credentials from a locally stored file called 'creds.config'.
+    Imports Yelp API credentials from a locally stored file called yelp.creds
 
     Returns JSON result of API query.
     """
@@ -92,9 +90,9 @@ def write_raw_result(api_result):
     """
     Writes raw JSON data to a local file, for debugging purposes.
 
-    If for some reason the script returns an empty CSV file, or complete garbage,
-    it could be useful to have this file generated. File would reveal any Oauth
-    errors, for example.
+    If for some reason the script returns an empty CSV file, or complete
+    garbage, it could be useful to have this file generated. Such a file would
+    reveal any Oauth errors, for example.
     """
     with open("raw_Yelp_JSON_data.txt", "w") as file:
         json.dump(api_result, file, sort_keys=True, indent=4)
