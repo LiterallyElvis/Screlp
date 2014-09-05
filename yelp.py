@@ -4,20 +4,21 @@ import json
 import csv
 import argparse
 
-
 parser = argparse.ArgumentParser(description="Fetches Yelp results.")
 parser.add_argument("-c", "--category", action="store", dest="category_filter",
-                     help="Category on yelp to search for")
-parser.add_argument("-c", "--category", action="store", dest="term",
-                     help="Category on yelp to search for")
-parser.add_argument("-a", "--address", action="store", dest="address", 
-                     required=True, help="Address to base query upon")
-parser.add_argument("-r", "--radius", action="store", dest="radius", default=1, 
-                     help="Radius in miles from origin coordinate.")
-parser.add_argument("-d", "--density", action="store", dest="density", default=0, 
-                     help="Grid desnity")
-parser.add_argument("-file", action="store", dest="filename", default="results.csv",
-                     help="Filename to save csv as.")
+                    help="Category on yelp to search for")
+parser.add_argument("-n", "--neighborhood", action="store",
+                    dest="neighborhood", help="Category on yelp to search for")
+parser.add_argument("-t", "--term", action="store", dest="term",
+                    help="Category on yelp to search for")
+parser.add_argument("-a", "--address", action="store", dest="address",
+                    required=True, help="Address to base query upon")
+parser.add_argument("-r", "--radius", action="store", dest="radius", default=1,
+                    help="Radius in miles from origin coordinate.")
+parser.add_argument("-d", "--density", action="store", dest="density",
+                    default=0, help="Grid density")
+parser.add_argument("-file", action="store", dest="filename",
+                    default="results.csv", help="Filename to save results as.")
 
 args = parser.parse_args()
 
@@ -35,8 +36,18 @@ class Business:
         self.category = None
 
 
-def make_url(args):
+def make_url(args, coords):
     url = "http://api.yelp.com/v2/search?"
+    lat, long = coords
+    if args.category_filter:
+        url += "&category_filter={0}".format(args.category_filter)
+    if args.term:
+        url += "&term={0}".format(args.term)
+    if args.neighborhood:
+        url += "&location={0}".format(args.neighborhood)
+    location = "cll={0},{1}".format(lat, long)
+    return url
+
 
 def get_coords(args):
     result = Geocoder.geocode(args.address)
@@ -97,4 +108,4 @@ def write_csv_file(items):
         for row in items:
             output.writerow(row)
 
-write_csv_file(fetch_results(make_api_call(url)))
+write_csv_file(fetch_results(make_api_call(make_url(args))))
