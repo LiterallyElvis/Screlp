@@ -21,9 +21,13 @@ def haversine(origin, destination):
     return distance
 
 
-def generate_coords(origin, radius=1, density=0):
+def generate_coords(origin, radius=1, density=1):
+    """
+    Returns list of coordinates, given a single origin coordinate (expressed in 
+    decimal degrees), a radius (expressed in miles), and a density value.
+    """
     coords = []
-    limit = int(1+((2**density)**2))  # y = (1 + 2^x)^2
+    limit = round(1+((2**(density/2))**2))  # y = (1 + 2^x)^2
     a, b = origin
     xmax, ymin = ((a + (X_INCREMENT * radius)), ((b - (Y_INCREMENT * radius))))
     xmin, ymax = ((a - (X_INCREMENT * radius)), ((b + (Y_INCREMENT * radius))))
