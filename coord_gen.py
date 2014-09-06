@@ -1,8 +1,10 @@
 import math
+import pygmaps
 
 X_INCREMENT = .014474
 Y_INCREMENT = .016761
 
+mymap = pygmaps.maps(30.233974, -97.732430, 13)
 
 def haversine(origin, destination):
     # Author: Wayne Dyck
@@ -27,19 +29,21 @@ def generate_coords(origin, radius=1, density=1):
     decimal degrees), a radius (expressed in miles), and a density value.
     """
     coords = []
-    limit = round(1+((2**(density/2))**2))  # y = (1 + 2^x)^2
+    limit = ((2 * density) + 1)**2  # y = (2x+1)^2
     a, b = origin
     xmax, ymin = ((a + (X_INCREMENT * radius)), ((b - (Y_INCREMENT * radius))))
     xmin, ymax = ((a - (X_INCREMENT * radius)), ((b + (Y_INCREMENT * radius))))
     x, y = xmin, ymax
 
-    for x in range(0, limit):
-        for y in range(0, limit):
+    for x in range(0, int(math.sqrt(limit))):
+        for y in range(0, int(math.sqrt(limit))):
             lat = float("%.6f" % (a + (x * X_INCREMENT)))
             long = float("%.6f" % (b - (y * Y_INCREMENT)))
             new_coord = (lat, long)
             if new_coord not in coords:
-                coords.append(new_coord)
+                if haversine(lat, long) <= radius:
+                    mymap.addpoint(lat, long, "#0000FF")
+                    coords.append(new_coord)
 
     return coords
 
@@ -47,7 +51,10 @@ def generate_coords(origin, radius=1, density=1):
 def enforce_radius(coords, radius):
     for pair in coords:
         lat, long = pair
-        if haversine(lat, long) > radius:
+        if haversine(lat, long) >= radius:
             coords.remove(pair)
 
     return coords
+
+print(generate_coords((30.233974, -97.732430), 1, 2))
+mymap.draw('./mymap.html')
