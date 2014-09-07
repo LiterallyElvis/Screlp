@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-from requests_oauthlib import OAuth1Session
+import argparse, sys
 from pygeocoder import Geocoder
+from requests_oauthlib import OAuth1Session
 import json
+import math
+import pygmaps
 import csv
-import argparse
 
 parser = argparse.ArgumentParser(description="Fetches Yelp results.")
 parser.add_argument("-c", "--category", action="store", dest="category",
@@ -31,6 +33,7 @@ class Business:
     Ultimately collected into a list of like objects for later comprehension.
     """
     def __init__(self):
+        self.result_position = 0
         self.id = None
         self.name = None
         self.address = None
@@ -55,16 +58,21 @@ def make_url(args, coords):
     if args.neighborhood:
         args.neighborhood = args.neighborhood .replace(" ", "+")
         url += "&location={0}".format(args.neighborhood)
-    location = "cll={0},{1}".format(lat, long)
+    url += "&cll={0},{1}".format(lat, long)
+
     return url
 
 
-def get_coords(args):
+def get_geocode(args):
     """
     Returns GPS coordinates from Google Maps for a given location.
     """
     result = Geocoder.geocode(args.address)
-    return result[0].coordinates
+    lat, long = result[0].coordinates
+    lat = round(lat, 6)
+    long = round(long, 6)
+    result = (lat, long)
+    return result
 
 
 def make_api_call(url, api_creds="yelp.creds"):
@@ -74,10 +82,10 @@ def make_api_call(url, api_creds="yelp.creds"):
     Returns JSON result of API query.
     """
     with open(api_creds, "r") as creds:
-        consumer_key = creds.readline().strip()
-        consumer_secret = creds.readline().strip()
-        token = creds.readline().strip()
-        token_secret = creds.readline().strip()
+        consumer_key = creds.readline().strip()[15:]
+        consumer_secret = creds.readline().strip()[18:]
+        token = creds.readline().strip()[8:]
+        token_secret = creds.readline().strip()[15:]
 
     yelp = OAuth1Session(consumer_key, consumer_secret, token, token_secret)
 
@@ -94,7 +102,9 @@ def write_raw_result(api_result):
     garbage, it could be useful to have this file generated. Such a file would
     reveal any Oauth errors, for example.
     """
-    with open("raw_Yelp_JSON_data.txt", "w") as file:
+    with open("raw_output.txt", "w") as file:
+        url = make_url(args, get_geocode(args))
+        file.write("API URL Retrieved: {0}\n".format(url))
         json.dump(api_result, file, sort_keys=True, indent=4)
 
 
@@ -107,6 +117,7 @@ def parse_results(api_result):
         biz = Business()
         try:
             source = api_result["businesses"][x]
+            biz.result_position = x+1
             biz.id = source["id"]
             biz.name = source["name"]
             if len(source["location"]["address"]) > 1:
@@ -120,10 +131,16 @@ def parse_results(api_result):
             biz.rating = str(source["rating"])
             biz.review_count = str(source["review_count"])
             biz.category = source["categories"][0][0]
-            item = [biz.id, biz.name, biz.address, biz.city, biz.state,
-                    biz.zip, biz.rating, biz.review_count, biz.category]
+            item = [biz.result_position, biz.id, biz.name, biz.address,
+                    biz.city, biz.state, biz.zip, biz.rating,
+                    biz.review_count, biz.category]
             items.append(item)
         except IndexError:
+            break
+        except KeyError:
+            if api_result["error"]:
+                print("Error(s) encountered, please see raw_output.txt!")
+                write_raw_result(api_result)
             break
     return items
 
@@ -139,4 +156,4 @@ def write_csv_file(items):
         for row in items:
             output.writerow(row)
 
-write_csv_file(parse_results(make_api_call(make_url(args, get_coords(args)))))
+parse_results(make_api_call(make_url(args, get_geocode(args))))
