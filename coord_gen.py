@@ -1,14 +1,17 @@
+# -*- coding: utf-8 -*-
 import math
 import pygmaps
 
 X_INCREMENT = .014474
 Y_INCREMENT = .016761
 
-gmap = pygmaps.maps(30.233974, -97.732430, 13)
+origin = (30.274294, -97.740504)
+gmap = pygmaps.maps(30.274294, -97.740504, 14)
 
 
 def haversine(origin, destination):
     # Author: Wayne Dyck
+    # platoscave.net/blog/2009/oct/5/calculate-distance-latitude-longitude-python/
     lat1, long1 = origin
     lat2, long2 = destination
     radius = 3959  # of earth, in miles
@@ -44,20 +47,19 @@ def generate_coords(origin, density=1, radius=1):
             long = float("%.6f" % (b - (y * (Y_INCREMENT / density))))
             new_coord = (lat, long)
             if new_coord not in coords:
-                if haversine(origin, new_coord) <= radius:
-                    gmap.addpoint(lat, long, "#0000FF")
-                    coords.append(new_coord)
+                coords.append(new_coord)
 
     return coords
 
 
-def enforce_radius(coords, radius):
+def create_map(coords, radius_enforced=True, radius=1):
     for pair in coords:
-        lat, long = pair
-        if haversine(lat, long) >= radius:
-            coords.remove(pair)
+        if radius_enforced:
+            if haversine(pair, origin) > radius:
+                pass
+            else:
+                lat, long = pair
+                gmap.addpoint(lat, long, "#0000FF")
+    gmap.draw('./gmap.html')
 
-    return coords
-
-print(generate_coords((30.233974, -97.732430), 3))
-gmap.draw('./gmap.html')
+create_map(generate_coords(origin, 3))
