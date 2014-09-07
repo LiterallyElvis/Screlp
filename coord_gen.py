@@ -37,7 +37,7 @@ def generate_coords(origin, density=1, radius=1):
     decimal degrees), a radius (expressed in miles), and a density value.
     """
     coords = []
-    limit = ((2 * density) + 1)**2  # y = (2x+1)^2
+    limit = ((2 * density) + 1)**2  # y = (2x+1)²
     a, b = origin
     gmap.addradpoint(a, b, (radius*1609.34), "origin")
     xmax, ymin = ((a + (X_INCREMENT * radius)), ((b - (Y_INCREMENT * radius))))
