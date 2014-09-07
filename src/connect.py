@@ -61,7 +61,6 @@ def make_url(args, coords):
         radius = int((int(args.radius) * 1609) / int(args.density))
         url += "&radius_filter={0}".format(radius)
     url += "&ll={0},{1}".format(lat, long)
-    url += "&sort=2"
 
     return url
 
