@@ -8,6 +8,8 @@ Y_INCREMENT = .016761
 origin = (30.274294, -97.740504)
 gmap = pygmaps.maps(30.274294, -97.740504, 14)
 
+# begin function borrowed from the internet
+
 
 def haversine(origin, destination):
     # Author: Wayne Dyck
@@ -25,6 +27,8 @@ def haversine(origin, destination):
     distance = round(radius * c, 2)
 
     return distance
+
+# end function borrowed from the internet
 
 
 def generate_coords(origin, density=1, radius=1):
