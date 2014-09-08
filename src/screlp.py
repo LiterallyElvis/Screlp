@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import argparse
 import geog
 import connect
@@ -11,7 +10,7 @@ parser.add_argument("-t", "--term", action="store", dest="term",
 parser.add_argument("-a", "--address", action="store", dest="address",
                     required=True, help="Address to base query upon")
 parser.add_argument("-c", "--category", action="store", dest="category",
-				    help="Category to limit results within")
+                    help="Category to limit results within")
 parser.add_argument("-r", "--radius", action="store", dest="radius", default=1,
                     help="Radius in miles from origin coordinate.")
 parser.add_argument("-d", "--density", action="store", dest="density",

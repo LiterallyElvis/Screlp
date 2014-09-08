@@ -1,5 +1,7 @@
-# -*- coding: utf-8 -*-
 from requests_oauthlib import OAuth1Session
+
+METERS_PER_MILE = 1609
+MAX_YELP_RADIUS = 40000
 
 
 def make_url(args, coords):
@@ -11,9 +13,8 @@ def make_url(args, coords):
     if args.term:
         url += "&term={0}".format(args.term).replace(" ", "+")
     if args.radius:
-        radius = int((int(args.radius) * 1609) / int(args.density))
-        if radius >= 40000:
-            radius = 40000
+        radius = int((int(args.radius) * METERS_PER_MILE) / int(args.density))
+        radius = min(radius, MAX_YELP_RADIUS)
         url += "&radius_filter={0}".format(radius)
     if args.category:
         url += "&category_filter={0}".format(category).replace(" ", "+")

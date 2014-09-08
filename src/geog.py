@@ -1,11 +1,12 @@
-# -*- coding: utf-8 -*-
 from pygeocoder import Geocoder
 import math
 import pygmaps
 from time import strftime, localtime
 
-X_INCREMENT = .014474
-Y_INCREMENT = .016761
+X_INCREMENT = .014474  # approximately one latitude mile in decimal degrees
+Y_INCREMENT = .016761  # approximately one longitude mile in decimal degrees
+METERS_PER_MILE = 1609
+EARTH_RADIUS_IN_MILES = 3959  # radius of earth, in miles
 gmap = pygmaps.maps(0.0, 0.0, 14)
 
 
@@ -25,7 +26,7 @@ def haversine(origin, destination):
     # platoscave.net/blog/2009/oct/5/calculate-distance-latitude-longitude-python/
     lat1, long1 = origin
     lat2, long2 = destination
-    radius = 3959  # of earth, in miles
+    EARTH_RADIUS_IN_MILES = 3959
 
     delta_lat = math.radians(lat2-lat1)
     delta_long = math.radians(long2-long1)
@@ -33,7 +34,7 @@ def haversine(origin, destination):
         + math.cos(math.radians(lat1)) * math.cos(math.radians(lat2)) \
         * math.sin(delta_long/2) * math.sin(delta_long/2)
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
-    distance = round(radius * c, 2)
+    distance = round(EARTH_RADIUS_IN_MILES * c, 2)
 
     return distance
 
@@ -44,9 +45,9 @@ def generate_coords(origin, density=1, radius=1):
     decimal degrees), a radius (expressed in miles), and a density value.
     """
     coords = []
-    limit = ((2 * density) + 1)**2  # y = (2x+1)^2
+    limit = ((2 * density) + 1)**2  # y = (2x+1)²
     a, b = origin
-    gmap.addradpoint(a, b, (radius*1609), "origin")
+    gmap.addradpoint(a, b, (radius * METERS_PER_MILE), "origin")
     xmax, ymin = ((a + (X_INCREMENT * radius)), ((b - (Y_INCREMENT * radius))))
     xmin, ymax = ((a - (X_INCREMENT * radius)), ((b + (Y_INCREMENT * radius))))
     gmap.addpoint(a, b, "#0000FF")
@@ -65,7 +66,7 @@ def generate_coords(origin, density=1, radius=1):
 
 def create_search_map(origin, coords, radius_enforced=True, radius=1):
     lat, long = origin
-    gmap = pygmaps.maps(lat, long, 14)
+    gmap = pygmaps.maps(lat, long, 14)  # 14 is the map's zoom level
     for pair in coords:
         if radius_enforced:
             if haversine(pair, origin) > radius:
