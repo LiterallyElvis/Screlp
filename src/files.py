@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
+import json
 import csv
+import connect
+import geog
 
-
-def write_raw_result(api_result):
+def write_raw_result(api_result, args):
     """
     Writes raw JSON data to a local file, for debugging purposes.
 
@@ -11,7 +13,7 @@ def write_raw_result(api_result):
     reveal any Oauth errors, for example.
     """
     with open("raw_output.txt", "w") as file:
-        url = make_url(args, get_geocode(args))
+        url = connect.make_url(args, geog.get_geocode(args))
         file.write("API URL Retrieved: {0}\n".format(url))
         json.dump(api_result, file, sort_keys=True, indent=4)
 

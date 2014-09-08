@@ -1,14 +1,23 @@
 # -*- coding: utf-8 -*-
+from pygeocoder import Geocoder
 import math
 import pygmaps
+from time import strftime, localtime
 
 X_INCREMENT = .014474
 Y_INCREMENT = .016761
+gmap = pygmaps.maps(0.0, 0.0, 14)
 
-origin = (30.274294, -97.740504)
-gmap = pygmaps.maps(30.274294, -97.740504, 14)
 
-# begin function borrowed from the internet
+def get_geocode(args):
+    """
+    Returns GPS coordinates from Google Maps for a given location.
+    """
+    result = Geocoder.geocode(args.address)
+    lat, long = result[0].coordinates
+    lat = round(lat, 6)
+    long = round(long, 6)
+    return (lat, long)
 
 
 def haversine(origin, destination):
@@ -28,8 +37,6 @@ def haversine(origin, destination):
 
     return distance
 
-# end function borrowed from the internet
-
 
 def generate_coords(origin, density=1, radius=1):
     """
@@ -37,9 +44,9 @@ def generate_coords(origin, density=1, radius=1):
     decimal degrees), a radius (expressed in miles), and a density value.
     """
     coords = []
-    limit = ((2 * density) + 1)**2  # y = (2x+1)²
+    limit = ((2 * density) + 1)**2  # y = (2x+1)^2
     a, b = origin
-    gmap.addradpoint(a, b, (radius*1609.34), "origin")
+    gmap.addradpoint(a, b, (radius*1609), "origin")
     xmax, ymin = ((a + (X_INCREMENT * radius)), ((b - (Y_INCREMENT * radius))))
     xmin, ymax = ((a - (X_INCREMENT * radius)), ((b + (Y_INCREMENT * radius))))
     gmap.addpoint(a, b, "#0000FF")
@@ -56,7 +63,9 @@ def generate_coords(origin, density=1, radius=1):
     return coords
 
 
-def create_map(coords, radius_enforced=True, radius=1):
+def create_search_map(origin, coords, radius_enforced=True, radius=1):
+    lat, long = origin
+    gmap = pygmaps.maps(lat, long, 14)
     for pair in coords:
         if radius_enforced:
             if haversine(pair, origin) > radius:
@@ -64,6 +73,7 @@ def create_map(coords, radius_enforced=True, radius=1):
             else:
                 lat, long = pair
                 gmap.addpoint(lat, long, "#0000FF")
-    gmap.draw('./gmap.html')
-
-create_map(generate_coords(origin, 3))
+        else:
+            lat, long = pair
+            gmap.addpoint(lat, long, "#0000FF")
+    gmap.draw("./search_map_" + strftime("%H-%M-%S", localtime()) + ".html")
