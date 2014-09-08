@@ -1,1 +1,0 @@
-The screlp.py included in this folder is a single, all-inclusive script that can run on its own. It is much more advisable to use the group of files one folder up.
