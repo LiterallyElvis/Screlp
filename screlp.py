@@ -7,6 +7,7 @@ import json
 import math
 import pygmaps
 import csv
+from time import strftime, localtime
 
 parser = argparse.ArgumentParser(description="Fetches Yelp results.")
 parser.add_argument("-t", "--term", action="store", dest="term",
@@ -147,7 +148,7 @@ def create_search_map(origin, coords, radius_enforced=True, radius=1):
         else:
             lat, long = pair
             gmap.addpoint(lat, long, "#0000FF")
-    gmap.draw('./search_map.html')
+    gmap.draw("./search_map_" + strftime("%H-%M-%S", localtime()) + ".html")
 
 
 def parse_results(api_result, items, url):
