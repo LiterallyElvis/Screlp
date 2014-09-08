@@ -7,9 +7,7 @@ Screlp
 
 ## Setup
 
-To get started, you'll want to ensure all your dependencies are installed. The script `install_dependencies.sh` can handle this for you, but you will need to have root privileges.
-
-One module, `pygmaps`, requires a pair of pip installation tags that allow for unverified, external modules to be installed. I've not seen any reason to believe that `pygmaps` is in any way malicious, rather that is just not hosted on PyPi. That said, all pygmaps does is generate HTML maps of the coordinates searched for in your query, so you're welcome to simply delete any references of it. Principally, in `screlp.py`, you'd want to eliminate the line that calls the function `create_search_map`
+To get started, you'll want to ensure all your dependencies are installed by running the command `pip3 install -r requirements.txt`.
 
 Once you've gotten your modules installed, you'll need to set up your yelp.creds file. The file is arranged so that you just copy paste the values from the Yelp API page in the order that they appear. For example, this is how the file should look with made-up values:
 
