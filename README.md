@@ -21,3 +21,4 @@ One module, `pygmaps`, requires a pair of pip installation tags that allow for u
 - -t/--term: Search term. Implemented in the API URL construction as a search parameter.
 - -r/--radius: Search radius. Used to generate multiple coordinates on the map and to limit results from a query.
 - -d/--density: Coordinate grid density. Number provided is one greater than the number of points generated between the origin coordinate and the outer bounds coordinates. In the calculation of the number of coordinate points necessary to generate, it is the x in f(x) = (1+2x)²
+- -c/--category: Category filter. Limits Yelp search results to within a cerrtain business category. Tricky to use properly, has to be taken from a list found here: http://www.yelp.com/developers/documentation/v2/all_category_list
