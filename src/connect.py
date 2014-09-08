@@ -16,7 +16,7 @@ def make_url(args, coords):
             radius = 40000
         url += "&radius_filter={0}".format(radius)
     if args.category:
-        url += "&category_filter={0}".format(category)
+        url += "&category_filter={0}".format(category).replace(" ", "+")
     url += "&ll={0},{1}".format(lat, long)
 
     return url
