@@ -64,7 +64,7 @@ def parse_results(api_result, items, url):
             except:
                 write_raw_result(api_result)
     return items
-    
+
 
 def scrape_yelp(args, coords):
     items = []

@@ -24,4 +24,3 @@ yelp_results = parse.scrape_yelp(args, results)
 yelp_results = parse.eliminate_duplicate_results(yelp_results)
 files.write_csv_file(yelp_results)
 files.write_raw_result(yelp_results, args)
-

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from requests_oauthlib import OAuth1Session
 
+
 def make_url(args, coords):
     """
     Returns a Yelp API URL based on arguments passed in the command line.

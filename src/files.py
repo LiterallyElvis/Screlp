@@ -4,6 +4,7 @@ import csv
 import connect
 import geog
 
+
 def write_raw_result(api_result, args):
     """
     Writes raw JSON data to a local file, for debugging purposes.
