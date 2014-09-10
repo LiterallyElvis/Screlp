@@ -47,7 +47,6 @@ def generate_coords(origin, density=1, radius=1):
     coords = []
     limit = ((2 * density) + 1)**2  # y = (2x+1)²
     a, b = origin
-    gmap.addradpoint(a, b, (radius * METERS_PER_MILE), "origin")
     xmax, ymin = ((a + (X_INCREMENT * radius)), ((b - (Y_INCREMENT * radius))))
     xmin, ymax = ((a - (X_INCREMENT * radius)), ((b + (Y_INCREMENT * radius))))
     gmap.addpoint(a, b, "#0000FF")
@@ -67,6 +66,7 @@ def generate_coords(origin, density=1, radius=1):
 def create_search_map(origin, coords, radius_enforced=True, radius=1):
     lat, long = origin
     gmap = pygmaps.maps(lat, long, 14)  # 14 is the map's zoom level
+    gmap.addradpoint(lat, long, (radius * METERS_PER_MILE), "origin")
     for pair in coords:
         if radius_enforced:
             if haversine(pair, origin) > radius:
