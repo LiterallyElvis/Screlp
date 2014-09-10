@@ -21,7 +21,7 @@ Once you've gotten your modules installed, you'll need to set up your yelp.creds
 
 ## Usage Example
 
-    $ python3 screlp.py -a="603 Red River St. Austin, TX 78701" -t="pizza" -d=2 -r=2
+    $ python3 screlp.py -a="603 Red River St. Austin, TX 78701" -t="pizza" -d=2
 
 ## Command Line Arguments
 
