@@ -52,7 +52,6 @@ def generate_coords(origin, density=1, radius=1, radius_enforced=True):
     lat_min = a - lat_mod
     lon_max = b + lon_mod
     a, b = lat_max, lon_min
-
     for x in range(0, limit):
         for y in range(0, limit):
             lat = float("%.6f" % (a - (x * (lat_mod / density))))
@@ -78,4 +77,5 @@ def create_search_map(origin, coords, radius_enforced=True, radius=1):
     for pair in coords:
         lat, lon = pair
         gmap.addpoint(lat, lon, "#0000FF")
-    gmap.draw("./search_map.html_(" + strftime("%H:%M:%S", localtime()) + ").html")
+    timestamp = strftime("%H:%M:%S", localtime())
+    gmap.draw("./search_map.html_({0}).html".format(timestamp))
