@@ -19,10 +19,6 @@ Once you've gotten your modules installed, you'll need to set up your yelp.creds
 
 > Token Secret = BREEBREEBREEBREE
 
-## Usage Example
-
-    $ python3 screlp.py -a="603 Red River St. Austin, TX 78701" -t="pizza" -r=2 -d=3
-
 ## Command Line Arguments
 
 - -a/--address: An address field. Used by pygeocoder module to retrieve decimal degrees coordinates for a given address.
@@ -30,3 +26,13 @@ Once you've gotten your modules installed, you'll need to set up your yelp.creds
 - -r/--radius: Search radius. Used to generate multiple coordinates on the map and to limit results from a query.
 - -d/--density: Coordinate grid density. Number provided is one greater than the number of points generated between the origin coordinate and the outer bounds coordinates. In the calculation of the number of coordinate points necessary to generate, it is the x in f(x) = (1+2x)²
 - -c/--category: Category filter. Limits Yelp search results to within a cerrtain business category. Tricky to use properly, has to be taken from a list found here: http://www.yelp.com/developers/documentation/v2/all_category_list
+
+## Usage Example
+
+    $ python3 screlp.py -a="603 Red River St. Austin, TX 78701" -t="pizza" -r=2 -d=3
+
+## To-Do
+
+- I'd like to make it so that the script can generate maps of all the results received.
+- I'd also like to have some method of tracking rank of a given result over time/geography.
+- It'd be cool to sell this for, like, a million bucks or whatever, too.
