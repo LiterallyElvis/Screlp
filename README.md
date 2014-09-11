@@ -15,7 +15,7 @@ Once you've gotten your modules installed, you'll need to set up your yelp.creds
 
 > Consumer Secret = YARFYARFYARFYARF
 
-> Token = MURRMURRMURRMURR
+> Token = MORGMORGMORGMORG
 
 > Token Secret = BREEBREEBREEBREE
 
