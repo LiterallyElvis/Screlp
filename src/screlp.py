@@ -19,7 +19,7 @@ parser.add_argument("-d", "--density", action="store", dest="density",
 args = parser.parse_args()
 
 origin = geog.get_geocode(args)
-results = geog.generate_coords(origin, int(args.density), int(args.radius))
+results = geog.generate_coords(origin, int(args.density), int(args.radius), True)
 geog.create_search_map(origin, results, True, int(args.radius))
 yelp_results = parse.scrape_yelp(args, results)
 yelp_results = parse.eliminate_duplicate_results(yelp_results)
