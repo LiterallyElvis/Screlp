@@ -3,7 +3,7 @@ Screlp
 
 ## Synopsis
 
-**Screlp** is a tool that queries the Yelp API and returns the results as a CSV file. It can take a single query and turn it into multiple, smaller-scale queries. In this way, it can retrieve more results than the standard Yelp API will allow. 
+**Screlp** is a tool that queries the Yelp API and returns the results as a CSV file. It can take a single query and turn it into multiple, smaller-scale queries. In this way, it can retrieve more results than the standard Yelp API will allow.
 
 ## Setup
 
@@ -21,7 +21,7 @@ Once you've gotten your modules installed, you'll need to set up your yelp.creds
 
 ## Usage Example
 
-    $ python3 screlp.py -a="603 Red River St. Austin, TX 78701" -t="pizza" -d=2
+    $ python3 screlp.py -a="603 Red River St. Austin, TX 78701" -t="pizza" -r=2 -d=3
 
 ## Command Line Arguments
 
