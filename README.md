@@ -33,6 +33,7 @@ Once you've gotten your modules installed, you'll need to set up your yelp.creds
 
 ## To-Do
 
+- I need to add more docstrings and unit tests.
 - I'd like to make it so that the script can generate maps of all the results received.
 - I'd also like to have some method of tracking rank of a given result over time/geography.
 - It'd be cool to sell this for, like, a million bucks or whatever, too.
