@@ -26,7 +26,7 @@ def make_url(args, coords):
     return url
 
 
-def make_api_call(url, api_creds="yelp.creds"):
+def make_api_call(url, api_creds="creds.ini"):
     """
     Imports Yelp API credentials from a locally stored file called yelp.creds
 
