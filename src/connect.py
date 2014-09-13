@@ -1,4 +1,6 @@
 from requests_oauthlib import OAuth1Session
+import argparse
+import configparser
 
 METERS_PER_MILE = 1609
 MAX_YELP_RADIUS = 40000
@@ -8,6 +10,7 @@ def make_url(args, coords):
     """
     Returns a Yelp API URL based on arguments passed in the command line.
     """
+
     url = "http://api.yelp.com/v2/search?"
     lat, long = coords
     if args.term:
@@ -29,11 +32,14 @@ def make_api_call(url, api_creds="yelp.creds"):
 
     Returns JSON result of API query.
     """
-    with open(api_creds, "r") as credentials:
-        consumer_key = credentials.readline().strip()[15:]
-        consumer_secret = credentials.readline().strip()[18:]
-        token = credentials.readline().strip()[8:]
-        token_secret = credentials.readline().strip()[15:]
+
+    config = configparser.ConfigParser()
+    config.read('creds.ini' )
+
+    consumer_key = config['YELP']['ConsumerKey']
+    consumer_secret = config['YELP']['ConsumerSecret']
+    token = config['YELP']['Token']
+    token_secret = config['YELP']['TokenSecret']
 
     yelp = OAuth1Session(consumer_key, consumer_secret, token, token_secret)
 
