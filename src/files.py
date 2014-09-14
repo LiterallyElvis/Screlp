@@ -26,5 +26,4 @@ def write_csv_file(items):
         output = csv.writer(csvout)
         output.writerow(["Rank", "ID", "Name", "Address", "City", "State",
                          "Zip", "Rating", "Review Count", "Category", "URL"])
-        for item in items:
-            output.writerow(item)
+        output.writerows(items)
