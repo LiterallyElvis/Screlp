@@ -34,7 +34,7 @@ def make_api_call(url, api_creds="creds.ini"):
     """
 
     config = configparser.ConfigParser()
-    config.read('creds.ini' )
+    config.read('creds.ini')
 
     consumer_key = config['YELP']['ConsumerKey']
     consumer_secret = config['YELP']['ConsumerSecret']
