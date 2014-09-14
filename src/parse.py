@@ -9,8 +9,9 @@ items = []
 def parse_results(api_result, items, url, args):
     """
     Takes JSON result from Yelp query and uses each individual result to
-    populate a Business object. Appends business object to list of business
-    objects for later manipulation.
+    create a namedtuple of select attributes. This namedtuple is then added
+    to a list of similar namedtuples. That list is checked for duplicate 
+    entries and then returned.
     """
     for x in range(0, api_result["total"]):
         Business = namedtuple("business", ["result_position", "id", "name",
