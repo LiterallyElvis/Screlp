@@ -9,15 +9,12 @@ Screlp
 
 To get started, you'll want to ensure all your dependencies are installed by running the command `pip3 install -r requirements.txt`.
 
-Once you've gotten your modules installed, you'll need to set up your yelp.creds file. The file is arranged so that you just copy paste the values from the Yelp API page in the order that they appear. For example, this is how the file should look with made-up values:
+Once you've gotten your modules installed, you'll need to set up your creds.ini file. The blank.ini file included is arranged so that you just copy paste the values from the Yelp API page in the order that they appear. For example, this is how the file should look with made-up values:
 
-> Consumer Key = BLAHBLAHBLAHBLAH
-
-> Consumer Secret = YARFYARFYARFYARF
-
-> Token = MORGMORGMORGMORG
-
-> Token Secret = BREEBREEBREEBREE
+> ConsumerKey = BLAHBLAHBLAHBLAH
+> ConsumerSecret = YARFYARFYARFYARF
+> Token = YADDAYADDAYADDAYADDA
+> TokenSecret = BREEBREEBREEBREE
 
 ## Command Line Arguments
 
@@ -31,9 +28,10 @@ Once you've gotten your modules installed, you'll need to set up your yelp.creds
 
     $ python3 screlp.py -a="603 Red River St. Austin, TX 78701" -t="pizza" -r=2 -d=3
 
+The files in this repo's `examples` folder are the result of this query.
+
 ## To-Do
 
-- I need to add more docstrings and unit tests.
 - I'd like to make it so that the script can generate maps of all the results received.
 - I'd also like to have some method of tracking rank of a given result over time/geography.
 - It'd be cool to sell this for, like, a million bucks or whatever, too.
