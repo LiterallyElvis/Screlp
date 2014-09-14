@@ -78,4 +78,4 @@ def create_search_map(origin, coords, radius_enforced=True, radius=1):
         lat, lon = pair
         gmap.addpoint(lat, lon, "#0000FF")
     timestamp = strftime("%H:%M:%S", localtime())
-    gmap.draw("./search_map.html_({0}).html".format(timestamp))
+    gmap.draw("./search_map_({0}).html".format(timestamp))
