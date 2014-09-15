@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Screlp by LiterallyElvis</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Screlp</h1>
+        <p>Yelp scraper</p>
+        <p class="view"><a href="https://github.com/LiterallyElvis/Screlp">View the Project on GitHub <small>LiterallyElvis/Screlp</small></a></p>
+        <ul>
+          <li><a href="https://github.com/LiterallyElvis/Screlp/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/LiterallyElvis/Screlp/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/LiterallyElvis/Screlp">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="screlp" class="anchor" href="#screlp"><span class="octicon octicon-link"></span></a>Screlp</h1>
+
+<h2>
+<a name="synopsis" class="anchor" href="#synopsis"><span class="octicon octicon-link"></span></a>Synopsis</h2>
+
+<p><strong>Screlp</strong> is a tool that queries the Yelp API and returns the results as a CSV file. It can take a single query and turn it into multiple, smaller-scale queries. In this way, it can retrieve more results than the standard Yelp API will allow.</p>
+
+<h2>
+<a name="setup" class="anchor" href="#setup"><span class="octicon octicon-link"></span></a>Setup</h2>
+
+<p>To get started, you'll want to ensure all your dependencies are installed by running the command <code>pip3 install -r requirements.txt</code>.</p>
+
+<p>Once you've gotten your modules installed, you'll need to set up your creds.ini file. The blank.ini file included is arranged so that you just copy paste the values from the Yelp API page in the order that they appear. For example, this is how the file should look with made-up values:</p>
+
+<blockquote>
+<p>ConsumerKey = BLAHBLAHBLAHBLAH</p>
+
+<p>ConsumerSecret = YARFYARFYARFYARF</p>
+
+<p>Token = YADDAYADDAYADDAYADDA</p>
+
+<p>TokenSecret = BREEBREEBREEBREE</p>
+</blockquote>
+
+<h2>
+<a name="command-line-arguments" class="anchor" href="#command-line-arguments"><span class="octicon octicon-link"></span></a>Command Line Arguments</h2>
+
+<ul>
+<li>-a/--address: An address field. Used by pygeocoder module to retrieve decimal degrees coordinates for a given address.</li>
+<li>-t/--term: Search term. Implemented in the API URL construction as a search parameter.</li>
+<li>-r/--radius: Search radius. Used to generate multiple coordinates on the map and to limit results from a query.</li>
+<li>-d/--density: Coordinate grid density. Number provided is one greater than the number of points generated between the origin coordinate and the outer bounds coordinates. In the calculation of the number of coordinate points necessary to generate, it is the x in f(x) = (1+2x)²</li>
+<li>-c/--category: Category filter. Limits Yelp search results to within a cerrtain business category. Tricky to use properly, has to be taken from a list found here: <a href="http://www.yelp.com/developers/documentation/v2/all_category_list">http://www.yelp.com/developers/documentation/v2/all_category_list</a>
+</li>
+</ul><h2>
+<a name="usage-example" class="anchor" href="#usage-example"><span class="octicon octicon-link"></span></a>Usage Example</h2>
+
+<pre><code>$ python3 screlp.py -a="603 Red River St. Austin, TX 78701" -t="pizza" -r=2 -d=3
+</code></pre>
+
+<p>The files in this repo's <code>examples</code> folder are the result of this query.</p>
+
+<h2>
+<a name="to-do" class="anchor" href="#to-do"><span class="octicon octicon-link"></span></a>To-Do</h2>
+
+<ul>
+<li>I'd like to make it so that the script can generate maps of all the results received.</li>
+<li>I'd also like to have some method of tracking rank of a given result over time/geography.</li>
+<li>It'd be cool to sell this for, like, a million bucks or whatever, too.</li>
+</ul>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/LiterallyElvis">LiterallyElvis</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
