@@ -11,13 +11,13 @@ To get started, you'll want to ensure all your dependencies are installed by run
 
 Once you've gotten your modules installed, you'll need to set up your creds.ini file. The blank.ini file included is arranged so that you just copy paste the values from the Yelp API page in the order that they appear. For example, this is how the file should look with made-up values:
 
-> ConsumerKey = BLAHBLAHBLAHBLAH
+> ConsumerKey = BLAHBLAHBLAH
 
-> ConsumerSecret = YARFYARFYARFYARF
+> ConsumerSecret = HARHARHAR
 
-> Token = YADDAYADDAYADDAYADDA
+> Token = YADDAYADDAYADDA
 
-> TokenSecret = BREEBREEBREEBREE
+> TokenSecret = HAHAHAHAHA
 
 ## Command Line Arguments
 
