@@ -1,5 +1,6 @@
 """
-files.py is an aspect of the Screlp script that handles file writing.
+files.py is a component of Screlp that handles file writing.
+
 Specifically, it has functions to write a results file and a debug file. The
 debug file is just the raw JSON output in a .txt file, and the true results
 file is a CSV file.
@@ -13,6 +14,7 @@ import pygmaps
 from time import strftime, localtime
 
 METERS_PER_MILE = 1609  # number of meters in one mile.
+
 
 def create_search_map(origin, coords, radius_enforced=True, radius=1):
     lat, lon = origin
