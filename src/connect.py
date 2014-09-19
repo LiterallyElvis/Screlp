@@ -1,5 +1,15 @@
+"""
+connect.py is a component of Screlp that deals with connecting to the Yelp API
+
+The first function, make_url, takes a list of command-line arguments, and adds
+various variables to a url scheme using their contents. It returns a completed
+URL that can be used to make API calls.
+
+make_api_call takes the aforementioned URL, and a list of OAuth 1.0 credentials
+in a .ini file, and makes a call to the Yelp API.
+"""
+
 from requests_oauthlib import OAuth1Session
-import argparse
 import configparser
 
 METERS_PER_MILE = 1609
@@ -20,7 +30,7 @@ def make_url(args, coords):
         radius = min(radius, MAX_YELP_RADIUS)
         url += "&radius_filter={0}".format(radius)
     if args.category:
-        url += "&category_filter={0}".format(category).replace(" ", "+")
+        url += "&category_filter={0}".format(args.category).replace(" ", "+")
     url += "&ll={0},{1}".format(lat, long)
 
     return url
@@ -34,7 +44,7 @@ def make_api_call(url, api_creds="creds.ini"):
     """
 
     config = configparser.ConfigParser()
-    config.read('creds.ini')
+    config.read(api_creds)
 
     consumer_key = config['YELP']['ConsumerKey']
     consumer_secret = config['YELP']['ConsumerSecret']
