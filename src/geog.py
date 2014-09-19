@@ -1,6 +1,20 @@
+"""
+geog.py is a component of Screlp that manages anything related to geography.
+
+The first function is get_geocode, which uses the pygeocoder module to retrieve
+GPS coordinates when supplied with a verbose address.
+
+The next function, haversine, is taken from a very helpful man named Wayne Dyck
+who posted the haversine formula online. It has been modified to use miles
+instead of kilometers.
+
+The last function is the true magic of screlp, a grid coordinate generator.
+Not a python generator, but rather a function that generates a grid of
+coordinates based on a single input coordinateself.
+"""
+
 from pygeocoder import Geocoder
 import math
-from time import strftime, localtime
 
 X_INCREMENT = .014474  # approximately one latitude mile in decimal degrees
 Y_INCREMENT = .016761  # approximately one lonitude mile in decimal degrees
@@ -20,8 +34,11 @@ def get_geocode(args):
 
 
 def haversine(origin, destination):
-    # Author: Wayne Dyck
-    # platoscave.net/blog/2009/oct/5/calculate-distance-latitude-lonitude-python/
+    """
+    Author: Wayne Dyck
+    http://www.platoscave.net/blog/2009/oct/5/
+                 calculate-distance-latitude-lonitude-python/
+    """
     lat1, lon1 = origin
     lat2, lon2 = destination
     delta_lat = math.radians(lat2-lat1)

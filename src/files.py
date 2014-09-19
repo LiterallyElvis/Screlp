@@ -12,7 +12,7 @@ import geog
 import pygmaps
 from time import strftime, localtime
 
-METERS_PER_MILE = 1609
+METERS_PER_MILE = 1609  # number of meters in one mile.
 
 def create_search_map(origin, coords, radius_enforced=True, radius=1):
     lat, lon = origin
