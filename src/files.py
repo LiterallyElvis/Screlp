@@ -1,3 +1,10 @@
+"""
+files.py is an aspect of the Screlp script that handles file writing.
+Specifically, it has functions to write a results file and a debug file. The
+debug file is just the raw JSON output in a .txt file, and the true results
+file is a CSV file.
+"""
+
 import json
 import csv
 import connect
