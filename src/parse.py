@@ -6,11 +6,11 @@ from collections import namedtuple
 items = []
 
 
-def parse_results(api_result, items, url, args):
+def parse_results(api_result, items, url):
     """
     Takes JSON result from Yelp query and uses each individual result to
     create a namedtuple of select attributes. This namedtuple is then added
-    to a list of similar namedtuples. That list is checked for duplicate 
+    to a list of similar namedtuples. That list is checked for duplicate
     entries and then returned.
     """
     for x in range(0, api_result["total"]):
@@ -45,10 +45,10 @@ def parse_results(api_result, items, url, args):
             try:
                 if api_result["error"]:
                     print("Error(s) encountered, please see raw_output.txt!")
-                    files.write_raw_result(api_result, args)
+                    files.write_raw_result(api_result)
                     sys.exit(1)
             except:
-                files.write_raw_result(api_result, args)
+                files.write_raw_result(api_result)
     items = list(set(items))
     return items
 
@@ -67,5 +67,5 @@ def scrape_yelp(args, coords):
     for coord in coords:
         url = connect.make_url(args, coord)
         result = connect.make_api_call(url)
-        items = parse_results(result, items, url, args)
+        items = parse_results(result, items, url)
     return items

@@ -1,13 +1,11 @@
 from pygeocoder import Geocoder
 import math
-import pygmaps
 from time import strftime, localtime
 
 X_INCREMENT = .014474  # approximately one latitude mile in decimal degrees
 Y_INCREMENT = .016761  # approximately one lonitude mile in decimal degrees
-METERS_PER_MILE = 1609
+METERS_PER_MILE = 1609  # number of meters in a mile.
 EARTH_RADIUS_IN_MILES = 3959  # radius of earth, in miles
-gmap = pygmaps.maps(0.0, 0.0, 14)
 
 
 def get_geocode(args):
@@ -68,14 +66,3 @@ def generate_coords(origin, density=1, radius=1, radius_enforced=True):
                     coords.append(new_coord)
 
     return coords
-
-
-def create_search_map(origin, coords, radius_enforced=True, radius=1):
-    lat, lon = origin
-    gmap = pygmaps.maps(lat, lon, 12)  # 14 is the map's zoom level
-    gmap.addradpoint(lat, lon, (radius * METERS_PER_MILE), "origin")
-    for pair in coords:
-        lat, lon = pair
-        gmap.addpoint(lat, lon, "#0000FF")
-    timestamp = strftime("%H:%M:%S", localtime())
-    gmap.draw("./search_map_({0}).html".format(timestamp))

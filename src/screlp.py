@@ -81,8 +81,8 @@ def main():
     args = argument_setup()
     origin = geog.get_geocode(args)
     results = geog.generate_coords(origin, int(args.density), int(args.radius))
-    geog.create_search_map(origin, results, True, int(args.radius))
     yelp_results = parse.scrape_yelp(args, results)
+    files.create_search_map(origin, results, True, int(args.radius))
     files.write_csv_file(yelp_results)
     print("Execution time: {:.2f}{}".format((time.time() - start), " seconds"))
 
