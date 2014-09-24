@@ -58,6 +58,10 @@ def parse_results(api_result, items, url):
             item.append(source["id"])
             item.append(source["name"])
             if len(source["location"]["address"]) > 1:
+                """ 
+                Handles case where there is a secondary aspect to the
+                address, such as a unit or suite number.
+                """
                 item.append(source["location"]["address"][0] + ", " +
                             source["location"]["address"][1])
             else:
