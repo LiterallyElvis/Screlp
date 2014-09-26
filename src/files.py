@@ -8,8 +8,6 @@ file is a CSV file.
 
 import json
 import csv
-import connect
-import geog
 import pygmaps
 from time import strftime, localtime
 
