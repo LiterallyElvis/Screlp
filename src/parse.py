@@ -16,8 +16,8 @@ files.py, for instance.
 """
 
 import sys
-import connect
-import files
+import src.connect as connect
+import src.files as files
 from collections import namedtuple
 
 
@@ -47,7 +47,7 @@ def parse_results(api_result, items, url):
     entries and then returned.
     """
     for position in range(0, api_result["total"]):
-        Business = namedtuple("business", ["result_position", "id", "name",
+        business = namedtuple("business", ["result_position", "id", "name",
                                            "address", "city", "state", "zip",
                                            "rating", "review_count",
                                            "category", "query_performed"])
@@ -74,7 +74,7 @@ def parse_results(api_result, items, url):
             item.append(source["categories"][0][0])
             url = url.replace("http://api.yelp.com/v2/search?", "")
             item.append(url)
-            biz = Business._make(item)
+            biz = business._make(item)
             items.append(biz)
         except IndexError:
             break
