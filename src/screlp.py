@@ -56,7 +56,9 @@ def argument_setup():
     parser.add_argument("-d", "--density", action="store", dest="density",
                         default=1, help="Grid density")
 
-    return parser.parse_args()
+    parser = parser.parse_args()
+
+    return parser
 
 
 def main():
