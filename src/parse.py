@@ -16,8 +16,8 @@ files.py, for instance.
 """
 
 import sys
-import src.connect as connect
-import src.files as files
+import connect
+import files
 from collections import namedtuple
 
 
@@ -58,7 +58,7 @@ def parse_results(api_result, items, url):
             item.append(source["id"])
             item.append(source["name"])
             if len(source["location"]["address"]) > 1:
-                """ 
+                """
                 Handles case where there is a secondary aspect to the
                 address, such as a unit or suite number.
                 """

@@ -6,9 +6,9 @@ all of the subsequent results are added to a giant list that is exported to CSV.
 """
 
 import argparse
-import src.geog as geog
-import src.parse as parse
-import src.files as files
+import geog
+import parse
+import files
 import time
 
 
